@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dunia Sports Community</title>
+<style>
+:root{--yellow:#ffd400;--black:#090909;--card:#111;--card2:#161616;--line:#292929;--muted:#929292;--white:#f5f5f5}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Inter,Arial,sans-serif;background:var(--black);color:var(--white);line-height:1.45}
+button,a{font:inherit}
+a{text-decoration:none;color:inherit}
+
+.splash{position:fixed;inset:0;z-index:1000;background:#050505;display:grid;place-items:center;overflow:hidden;animation:splashOut .7s ease 3s forwards;cursor:pointer}
+.splash:before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 42%,rgba(255,212,0,.12),transparent 30%),linear-gradient(110deg,transparent 20%,rgba(255,212,0,.04) 50%,transparent 80%)}
+.splash-inner{position:relative;width:min(900px,90vw);height:420px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.splash-logo{font-size:clamp(58px,11vw,128px);font-weight:1000;letter-spacing:-6px;color:#f5f5f5;line-height:.82;text-transform:uppercase;text-shadow:0 0 35px rgba(255,212,0,.12)}
+.splash-logo span{color:var(--yellow)}
+.splash-sub{margin-top:18px;color:#aaa;font-size:clamp(10px,1.6vw,15px);font-weight:900;letter-spacing:5px;text-transform:uppercase}
+.splash-line{position:absolute;left:-10vw;right:-10vw;bottom:88px;height:1px;background:linear-gradient(90deg,transparent,var(--yellow),transparent);opacity:.45}
+.splash-car{position:absolute;left:-260px;bottom:62px;width:260px;height:90px;animation:carFly 2.2s cubic-bezier(.15,.7,.2,1) .35s forwards}
+.splash-car svg{width:100%;height:100%;filter:drop-shadow(0 0 18px rgba(255,212,0,.28))}
+.splash-skip{position:absolute;bottom:28px;color:#666;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase}
+@keyframes carFly{0%{transform:translateX(0) scale(.8);opacity:0}12%{opacity:1}100%{transform:translateX(calc(100vw + 520px)) scale(1.08);opacity:1}}
+@keyframes splashOut{to{opacity:0;visibility:hidden;pointer-events:none}}
+@media(max-width:600px){.splash-inner{height:360px}.splash-car{bottom:80px;width:210px;height:72px}.splash-logo{letter-spacing:-3px}.splash-sub{letter-spacing:3px}}
+
+.top{border-bottom:1px solid var(--line);background:#0b0b0b;position:sticky;top:0;z-index:20}
+.nav{max-width:1180px;margin:auto;padding:15px 22px;display:flex;align-items:center;gap:25px}
+.brand{font-weight:950;letter-spacing:.5px;white-space:nowrap}
+.brand span{color:var(--yellow)}
+.navlinks{display:flex;gap:20px;margin-left:auto;font-size:13px;font-weight:800;color:#aaa}
+.navlinks a:hover{color:var(--yellow)}
+.hero{border-bottom:1px solid var(--line);background:radial-gradient(circle at 78% 35%,rgba(255,212,0,.14),transparent 28%),linear-gradient(120deg,#090909,#121212);padding:70px 22px 55px}
+.wrap{max-width:1180px;margin:auto}
+.eyebrow{color:var(--yellow);font-size:11px;font-weight:900;letter-spacing:2.4px;text-transform:uppercase}
+h1{font-size:clamp(45px,7vw,82px);line-height:.9;letter-spacing:-4px;text-transform:uppercase;margin:13px 0 20px}
+.hero p{max-width:690px;color:#999;font-size:16px}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:35px;border:1px solid var(--line);background:var(--line)}
+.stat{background:#0e0e0e;padding:20px}
+.stat b{display:block;font-size:28px;color:var(--yellow)}
+.stat small{color:#777;text-transform:uppercase;font-size:10px;font-weight:800;letter-spacing:1px}
+section{max-width:1180px;margin:auto;padding:58px 22px}
+.head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin-bottom:22px}
+.head h2{font-size:31px;text-transform:uppercase;letter-spacing:-1px;margin-top:4px}
+.head p{color:#777;font-size:13px}
+.series{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.series-card{background:var(--card);border:1px solid var(--line);padding:23px;border-radius:8px;min-height:145px;position:relative;overflow:hidden;transition:.18s}
+.series-card:hover{transform:translateY(-3px);border-color:#555}
+.series-card:before{content:"";position:absolute;left:0;top:0;width:3px;height:100%;background:var(--yellow)}
+.series-no{font-size:10px;color:var(--yellow);font-weight:900;letter-spacing:1.5px}
+.series-card h3{font-size:21px;margin:16px 0 6px;text-transform:uppercase}
+.series-card p{color:#777;font-size:12px}
+.standings-box{border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--card)}
+.tabs{display:flex;gap:2px;padding:8px;background:#0d0d0d;border-bottom:1px solid var(--line);overflow:auto}
+.roster-tabs{margin-bottom:12px;border:1px solid var(--line);border-radius:8px;overflow:hidden}
+.roster-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.roster-card{background:var(--card);border:1px solid var(--line);padding:20px;border-radius:8px;min-height:150px}
+.roster-card .driver-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.team-label{display:flex;align-items:center;gap:9px;color:#aaa;font-size:11px;font-weight:800;margin-top:15px}
+@media(max-width:800px){.roster-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.roster-grid{grid-template-columns:1fr}}
+.tab{border:0;background:transparent;color:#777;padding:10px 15px;font-size:11px;font-weight:900;white-space:nowrap;cursor:pointer}
+.tab.active,.tab:hover{background:var(--yellow);color:#080808;border-radius:4px}
+.tablewrap{overflow-x:auto}
+table{border-collapse:collapse;width:100%;min-width:760px}
+th{background:#171717;color:#777;font-size:10px;text-transform:uppercase;letter-spacing:1px;text-align:left;padding:13px 15px}
+td{padding:15px;border-top:1px solid var(--line);font-size:13px;font-weight:700}
+tr:hover td{background:#151515}
+.pos{color:var(--yellow);font-size:17px}
+.driver{display:flex;align-items:center;gap:10px}
+.avatar{width:35px;height:35px;border-radius:50%;background:#242424;display:grid;place-items:center;font-size:11px;border:1px solid #3b3b3b}
+.flag{font-size:19px;margin-right:6px}
+.points{color:var(--yellow);font-size:17px}
+.muted{color:#777}
+.footer{border-top:1px solid var(--line);padding:28px 22px;text-align:center;color:#666;font-size:12px}
+@media(max-width:800px){.navlinks{display:none}.series{grid-template-columns:1fr 1fr}.stats{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.series{grid-template-columns:1fr}.stats{grid-template-columns:1fr 1fr}h1{letter-spacing:-2px}}
+</style>
+</head>
+<body>
+<div class="splash" id="splash" aria-label="Dunia Sports Community intro">
+  <div class="splash-inner">
+    <div class="splash-logo">DUNIA<span>°</span></div>
+    <div class="splash-sub">SPORTS COMMUNITY</div>
+    <div class="splash-line"></div>
+    <div class="splash-car" aria-hidden="true">
+      <svg viewBox="0 0 520 180" xmlns="http://www.w3.org/2000/svg">
+        <g fill="none" stroke="none">
+          <path d="M35 112 L95 105 L145 76 L250 68 L306 84 L380 88 L430 104 L490 108 L470 122 L55 126 Z" fill="#151515" stroke="#ffd400" stroke-width="5"/>
+          <path d="M145 76 L185 47 L280 47 L306 84 L250 88 L205 69 Z" fill="#0a0a0a" stroke="#ffd400" stroke-width="4"/>
+          <path d="M205 69 L225 50 L268 50 L285 83" stroke="#ffd400" stroke-width="4"/>
+          <path d="M90 104 L45 93 L24 101 L58 117" fill="#111" stroke="#ffd400" stroke-width="4"/>
+          <path d="M375 89 L475 92 L503 103 L470 112" fill="#111" stroke="#ffd400" stroke-width="4"/>
+          <circle cx="105" cy="126" r="28" fill="#050505" stroke="#ffd400" stroke-width="5"/>
+          <circle cx="415" cy="126" r="28" fill="#050505" stroke="#ffd400" stroke-width="5"/>
+          <circle cx="105" cy="126" r="10" fill="#ffd400"/>
+          <circle cx="415" cy="126" r="10" fill="#ffd400"/>
+          <path d="M55 126 H465" stroke="#ffd400" stroke-width="3"/>
+          <path d="M0 145 H520" stroke="#ffd400" stroke-width="2" opacity=".25"/>
+        </g>
+      </svg>
+    </div>
+    <div class="splash-skip">Click anywhere to enter</div>
+  </div>
+</div>
+<header class="top">
+  <nav class="nav">
+    <div class="brand">DUNIA <span>SPORTS COMMUNITY</span></div>
+    <div class="navlinks">
+      <a href="#series">Series</a>
+      <a href="#standings">Standings</a>
+      <a href="#drivers">Drivers</a>
+    </div>
+  </nav>
+</header>
+
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">2026 Season · Racing Community</div>
+    <h1>Dunia<br><span style="color:var(--yellow)">Sports</span></h1>
+    <p>A home for competitive league racing. Explore every racing series, follow the championship standings and keep up with the drivers.</p>
+    <div class="stats">
+      <div class="stat"><b>9</b><small>Racing Series</small></div>
+      <div class="stat"><b>5</b><small>Registered Drivers</small></div>
+      <div class="stat"><b>0</b><small>Rounds Completed</small></div>
+    </div>
+  </div>
+</header>
+
+<section id="series">
+  <div class="head">
+    <div><div class="eyebrow">01 / Championships</div><h2>Racing Series</h2></div>
+    <p>All Dunia Sports Community categories</p>
+  </div>
+  <div class="series">
+    <div class="series-card"><span class="series-no">01</span><h3>Formula 1</h3><p>Top-level open-wheel championship.</p></div>
+    <div class="series-card"><span class="series-no">02</span><h3>RIA Super Formula 2</h3><p>Super Formula 2 championship.</p></div>
+    <div class="series-card"><span class="series-no">03</span><h3>RIA Junior Formula 3</h3><p>Junior Formula 3 championship.</p></div>
+    <div class="series-card"><span class="series-no">04</span><h3>Endurance Series</h3><p>Long-distance multi-class racing.</p></div>
+    <div class="series-card"><span class="series-no">05</span><h3>Rally</h3><p>Competitive rally championship.</p></div>
+    <div class="series-card"><span class="series-no">06</span><h3>NASCAR</h3><p>Stock-car league racing.</p></div>
+    <div class="series-card"><span class="series-no">07</span><h3>IndyCar</h3><p>Open-wheel IndyCar racing.</p></div>
+    <div class="series-card"><span class="series-no">08</span><h3>Karting Series</h3><p>Competitive kart racing.</p></div>
+    <div class="series-card"><span class="series-no">09</span><h3>Superbike</h3><p>Superbike championship.</p></div>
+  </div>
+</section>
+
+<section id="standings">
+  <div class="head">
+    <div><div class="eyebrow">02 / Championship</div><h2>Standings</h2></div>
+    <p>Driver championship points</p>
+  </div>
+  <div class="standings-box">
+    <div class="tabs" id="seriesTabs">
+      <button class="tab active" data-series="all">All Drivers</button>
+      <button class="tab" data-series="formula-1">Formula 1</button>
+      <button class="tab" data-series="ria-super-formula-2">RIA Super Formula 2</button>
+      <button class="tab" data-series="ria-junior-formula-3">RIA Junior Formula 3</button>
+      <button class="tab" data-series="endurance-series">Endurance Series</button>
+      <button class="tab" data-series="rally">Rally</button>
+      <button class="tab" data-series="nascar">NASCAR</button>
+      <button class="tab" data-series="indycar">IndyCar</button>
+      <button class="tab" data-series="karting-series">Karting Series</button>
+      <button class="tab" data-series="superbike">Superbike</button>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr><th>Pos</th><th>Driver</th><th>Nationality</th><th>Series</th><th>Pts</th><th>Wins</th><th>Podiums</th></tr></thead>
+        <tbody id="standingsBody">
+          <tr><td class="pos">01</td><td><div class="driver"><div class="avatar">AL</div>Altin</div></td><td><span class="flag">🇹🇷</span>Turkey</td><td class="muted">RIA Junior Formula 3</td><td class="points">0</td><td>0</td><td>0</td></tr>
+          <tr><td class="pos">02</td><td><div class="driver"><div class="avatar">AN</div>Anti</div></td><td><span class="flag">🇩🇪</span>Germany</td><td class="muted">RIA Junior Formula 3</td><td class="points">0</td><td>0</td><td>0</td></tr>
+          <tr><td class="pos">03</td><td><div class="driver"><div class="avatar">KJ</div>KJH</div></td><td><span class="flag">🇰🇷</span>South Korea</td><td class="muted">RIA Junior Formula 3</td><td class="points">0</td><td>0</td><td>0</td></tr>
+          <tr><td class="pos">04</td><td><div class="driver"><div class="avatar">DA</div>Danny</div></td><td><span class="flag">🇲🇾</span>Malaysia</td><td class="muted">Endurance Series</td><td class="points">0</td><td>0</td><td>0</td></tr>
+          <tr><td class="pos">05</td><td><div class="driver"><div class="avatar">KY</div>Kyo</div></td><td><span class="flag">🇮🇶</span>Iraq</td><td class="muted">Endurance Series</td><td class="points">0</td><td>0</td><td>0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="drivers">
+  <div class="head">
+    <div><div class="eyebrow">Driver Roster</div><h2>Driver Roster</h2></div>
+    <p>Choose a category to view its drivers</p>
+  </div>
+  <div class="standings-box roster-tabs">
+    <div class="tabs" id="rosterTabs">
+      <button class="tab" data-series="formula-1">Formula 1</button>
+      <button class="tab" data-series="ria-super-formula-2">Formula 2</button>
+      <button class="tab active" data-series="ria-junior-formula-3">Formula 3</button>
+      <button class="tab" data-series="endurance-series">Endurance</button>
+      <button class="tab" data-series="rally">Rally</button>
+      <button class="tab" data-series="nascar">NASCAR</button>
+      <button class="tab" data-series="indycar">IndyCar</button>
+      <button class="tab" data-series="karting-series">Karting</button>
+      <button class="tab" data-series="superbike">Superbike</button>
+    </div>
+  </div>
+  <div class="roster-grid" id="rosterGrid"></div>
+</section>
+
+<footer class="footer">© 2026 Dunia Sports Community · Built for league racing</footer>
+
+<script>
+const drivers = [
+  {name:'Altin', initials:'AL', flag:'🇹🇷', country:'Turkey', series:['ria-junior-formula-3'], seriesNames:{'ria-junior-formula-3':'RIA Junior Formula 3'}},
+  {name:'Anti', initials:'AN', flag:'🇩🇪', country:'Germany', series:['ria-junior-formula-3'], seriesNames:{'ria-junior-formula-3':'RIA Junior Formula 3'}},
+  {name:'KJH', initials:'KJ', flag:'🇰🇷', country:'South Korea', series:['ria-junior-formula-3'], seriesNames:{'ria-junior-formula-3':'RIA Junior Formula 3'}},
+  {name:'Danny', initials:'DA', flag:'🇲🇾', country:'Malaysia', series:['endurance-series'], seriesNames:{'endurance-series':'Endurance Series'}},
+  {name:'Kyo', initials:'KY', flag:'🇮🇶', country:'Iraq', series:['ria-super-formula-2','endurance-series'], seriesNames:{'ria-super-formula-2':'RIA Super Formula 2','endurance-series':'Endurance Series'}}
+];
+
+const tabs = document.querySelectorAll('#seriesTabs .tab');
+const body = document.getElementById('standingsBody');
+const rosterTabs = document.querySelectorAll('#rosterTabs .tab');
+const rosterGrid = document.getElementById('rosterGrid');
+
+function renderStandings(series) {
+  const filtered = series === 'all' ? drivers : drivers.filter(d => d.series.includes(series));
+  body.innerHTML = filtered.length ? filtered.map((d, i) => {
+    const shownSeries = series === 'all' ? Object.values(d.seriesNames).join(' · ') : d.seriesNames[series];
+    return `
+    <tr>
+      <td class="pos">${String(i + 1).padStart(2,'0')}</td>
+      <td><div class="driver"><div class="avatar">${d.initials}</div>${d.name}</div></td>
+      <td><span class="flag">${d.flag}</span>${d.country}</td>
+      <td class="muted">${shownSeries}</td>
+      <td class="points">0</td><td>0</td><td>0</td>
+    </tr>`;
+  }).join('') : `
+    <tr><td colspan="7" class="muted" style="padding:24px;text-align:center">No drivers registered in this series yet.</td></tr>`;
+}
+
+function renderRoster(series) {
+  const filtered = drivers.filter(d => d.series.includes(series));
+  rosterGrid.innerHTML = filtered.length ? filtered.map(d => `
+    <div class="roster-card">
+      <div class="driver-top">
+        <div>
+          <div class="driver"><div class="avatar">${d.initials}</div><strong>${d.name}</strong></div>
+          <div class="team-label"><span>${d.flag} ${d.country}</span></div>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:14px;font-size:12px">${d.seriesNames[series]} · 0 points</p>
+    </div>`).join('') : `
+    <div class="muted" style="grid-column:1/-1;padding:28px;text-align:center;border:1px solid var(--line);border-radius:8px;background:var(--card)">No drivers registered in this series yet.</div>`;
+}
+
+tabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    tabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderStandings(tab.dataset.series);
+  });
+});
+
+rosterTabs.forEach(tab => {
+  tab.addEventListener('click', () => {
+    rosterTabs.forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderRoster(tab.dataset.series);
+  });
+});
+
+renderStandings('all');
+renderRoster('ria-junior-formula-3');
+
+const splash = document.getElementById('splash');
+splash.addEventListener('click', () => { splash.style.animation = 'splashOut .45s ease forwards'; });
+</script>
+</body>
+</html>
